@@ -1,0 +1,10 @@
+body{
+    /* background-image: url('../img/gramado-fundo.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-none{
+    background-color: transparent !important;
+    border: none;
+}
