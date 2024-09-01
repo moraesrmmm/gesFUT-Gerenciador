@@ -13,4 +13,8 @@ Route::get('/reservas/nova', function () {
     return view('nova_reserva');
 });
 
+Route::get('/quadras', function () {
+    return view('quadras');
+});
+
 

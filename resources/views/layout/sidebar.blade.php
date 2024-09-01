@@ -96,8 +96,8 @@
                                 </span>
                             </a>
                             <ul class="submenu">
-                                <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Usuários</a></li>
-                                <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Quadras</a></li>
+                                <!-- <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Usuários</a></li> -->
+                                <li class="list-sub-menu"><a href="{{ url('/quadras') }}" class="nav-link px-0 text-white">Quadras</a></li>
                                 <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reservas</a></li>
                                 <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reclamações</a></li>
                                 <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Administradores</a></li>

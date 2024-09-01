@@ -1,11 +1,17 @@
 input{
-    /* border-color: 2px rgb(28, 0, 128) !important; */
-   
     border: 1px solid #afafaf !important;
-    margin-left: 11px !important;
 }
 
 input:focus{
+    border: 1px solid #FF6900 !important;
+    box-shadow: 0 0 2px #FF6900 !important;
+}
+
+select{
+    border: 1px solid #afafaf !important;
+}
+
+select:focus{
     border: 1px solid #FF6900 !important;
     box-shadow: 0 0 2px #FF6900 !important;
 }
@@ -14,6 +20,12 @@ input:focus{
     background-color: #FF6900 !important;
 }
 
-.bg-gray{
+.btn-primary{
+    background-color: #FF6900 !important;
+    border: 1px solid #FF6900 !important;
+}
 
+.btn-primary:hover{
+    background-color: #e76507 !important;
+    border: 1px solid #FF6900 !important;
 }
