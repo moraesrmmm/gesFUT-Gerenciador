@@ -17,4 +17,12 @@ Route::get('/quadras', function () {
     return view('quadras');
 });
 
+Route::get('/quadras/nova', function () {
+    return view('nova_quadra');
+});
+
+Route::get('/cadastro', function () {
+    return view('cadastro');
+});
+
 

@@ -10,7 +10,7 @@
             background-color: #e7e7e7 !important;
             border-radius: 10px;
         }
-        .bg-gradient-green{
+        .bg-gradient-secondary{
             background-color: #171717;
         }
         .custom-hr {
@@ -46,7 +46,7 @@
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 position-fixed  bg-gradient-green " style="top: 0; left: 0; height: 100vh; width: 250px;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 position-fixed  bg-gradient-secondary " style="top: 0; left: 0; height: 100vh; width: 250px;">
                     <a href="/" class="d-flex align-items-center pb-1 pt-1 mb-md-0 me-md-auto text-white text-decoration-none">
                         <img src="{{ asset('img/logo.png') }}" alt="" style="width: 150px;">
                     </a>

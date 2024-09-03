@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="card ms-4 mt-4 d-flex justify-content-center align-items-center" style="width: 17rem; height: 23rem;">
-        <a href="{{ url('/reservas/nova') }}"><i class="material-icons text-danger" style="font-size: 100px;">add</i></a>
+        <a href="{{ url('/quadras/nova') }}"><i class="material-icons text-danger" style="font-size: 100px;">add</i></a>
     </div>
 </div>
 @endsection
