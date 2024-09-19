@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
             $table->string('user_nome');
-            $table->string('user_cpf');
-            $table->string('user_email');
+            $table->string('user_cpf')->unique();
+            $table->string('user_email')->unique();
             $table->string('user_senha');
-            $table->string('user_nivel');
-            $table->string('user_dt_cricao');
+            $table->integer('user_nivel');
+            $table->timestamp('user_dt_criacao')->useCurrent(); // Corrigido para timestamp
             $table->string('user_status');
             $table->string('user_telefone');
+            $table->timestamps(); // Adiciona created_at e updated_at
         });
     }
 
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('usuarios'); // Remove a tabela e suas colunas
     }
 };

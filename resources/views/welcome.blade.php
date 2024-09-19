@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GesFUT Gerenciador</title>
-    @include('includes._includes') 
+    @include('includes._includes')
     <style>
-        body{
+        body {
             background-color: #e7e7e7;
         }
-        .bg-gray{
+        .bg-gray {
             background-color: #e7e7e7 !important;
         }
-        nav{
+        nav {
             border-bottom: 1px solid #d7d7d7;
         }
     </style>
 </head>
-<body ng-app="gesfut" ng-controller="welcomeCtrl">
+<body>
     <nav class="navbar navbar-light bg-gray">
-        <a class="navbar-brand ms-2" href="#">
+        <a class="navbar-brand ms-2" href="{{ url('/') }}">
             <img src="{{ asset('img/logo.png') }}" alt="" style="width: 150px;">
         </a>
         <div class="ms-auto d-flex align-items-center me-3">
-            <input type="text" class="form-control me-3" placeholder="Email ou CPF">
-            <input type="password" class="form-control me-2" placeholder="Senha">
-            <a class="btn btn-primary ms-2" href="#">Login</a>
+            <a href="{{ url('/login') }}" type="submit" class="btn btn-primary ms-2">Login</a>
         </div>
     </nav>
     <div class="container">
@@ -51,10 +49,10 @@
                             <img src="{{ asset('img/welcome-img-3.jpg') }}" class="d-block w-100" style="height: 400px;" alt="...">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="background:  none !important; border: none !important;">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="background: none !important; border: none !important;">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="background:  none !important; border: none !important;">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="background: none !important; border: none !important;">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </button>
                 </div>
