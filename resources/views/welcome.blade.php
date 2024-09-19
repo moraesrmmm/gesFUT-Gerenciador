@@ -33,7 +33,7 @@
                     <h1>Uma forma simplificada de anunciar e contratar sua quadra esportiva</h1>
                 </div>
                 <div class="botao-comece mb-5 mt-4">
-                    <a href="{{ url('/cadastro') }}" class="btn btn-primary btn-lg btn-block" style="width: 400px !important;">Clique aqui para começar</a>
+                    <a href="{{ url('/register') }}" class="btn btn-primary btn-lg btn-block" style="width: 400px !important;">Clique aqui para começar</a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 mt-2">

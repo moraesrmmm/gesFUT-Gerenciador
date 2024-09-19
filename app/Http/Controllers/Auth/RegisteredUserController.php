@@ -30,24 +30,23 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-
+        // dd($request->all());
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:usuarios,user_email', // Verificando email único na tabela correta
-            'password' => 'required|string|min:8|confirmed',
-            'cpf' => 'required|string|max:14|unique:usuarios,user_cpf', // CPF deve ser único e validado
-            'telefone' => 'required|string|max:15', // Validar telefone
+            'user_nome' => ['required', 'string', 'max:255'],
+            'user_email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'user_cpf' => ['required', 'string', 'email', 'max:11', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'user_nome' => $request->name,
-            'user_email' => $request->email,
-            'user_senha' => Hash::make($request->password), // Criptografando a senha
-            'user_cpf' => $request->cpf,
-            'user_telefone' => $request->telefone,
-            'user_status' => 'ativo',
-            'user_nivel' => 0,
-            'user_dt_criacao' => now(), // Usando a função now() do Laravel
+            'user_nome' => $request->user_nome,
+            'user_cpf' => $request->user_cpf,
+            'user_email' => $request->user_email,
+            'user_senha' => Hash::make($request->password),
+            'user_nivel' => '0',
+            'user_dt_criacao' => now(),
+            'user_status' => 'ATIVO',
+            'user_telefone' => $request->user_telefone
         ]);
 
         event(new Registered($user));

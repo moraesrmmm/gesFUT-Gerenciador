@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('user_email')->unique();
             $table->string('user_senha');
             $table->integer('user_nivel');
-            $table->timestamp('user_dt_criacao')->useCurrent(); // Corrigido para timestamp
+            $table->timestamp('user_dt_criacao')->useCurrent(); 
             $table->string('user_status');
             $table->string('user_telefone');
-            $table->timestamps(); // Adiciona created_at e updated_at
+            $table->timestamps(); 
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios'); // Remove a tabela e suas colunas
+        Schema::dropIfExists('usuarios'); 
     }
 };

@@ -43,21 +43,21 @@
             <div class="form-group row mt-3">
                 <div class="col-6">
                     <label for="name" class="mb-2">Nome<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-                    <input id="name" type="text" class="form-control" name="name" placeholder="Digite o seu nome" value="{{ old('name') }}" required>
+                    <input id="name" type="text" class="form-control" name="user_nome" placeholder="Digite o seu nome" value="{{ old('name') }}" required>
                 </div>
                 <div class="col-6">
                     <label for="cpf" class="mb-2">CPF<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-                    <input id="cpf" type="text" class="form-control" name="cpf" placeholder="Digite o seu CPF" value="{{ old('cpf') }}" required>
+                    <input id="cpf" type="text" class="form-control" name="user_cpf" placeholder="Digite o seu CPF" value="{{ old('cpf') }}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-6">
                     <label for="email" class="mb-2">Email<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-                    <input id="email" type="email" class="form-control" name="email" placeholder="Digite o email" value="{{ old('email') }}" required>
+                    <input id="email" type="email" class="form-control" name="user_email" placeholder="Digite o email" value="{{ old('email') }}" required>
                 </div>
                 <div class="col-6">
                     <label for="telefone" class="mb-2">Telefone<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-                    <input id="telefone" type="text" class="form-control" name="telefone" placeholder="Digite o telefone" value="{{ old('telefone') }}" required>
+                    <input id="telefone" type="text" class="form-control" name="user_telefone" placeholder="Digite o telefone" value="{{ old('telefone') }}" required>
                 </div>
             </div>
             <div class="form-group row">
