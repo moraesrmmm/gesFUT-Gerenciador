@@ -17,7 +17,9 @@
         }
     </style>
 </head>
+
 <body>
+
     <nav class="navbar navbar-light bg-gray">
         <a class="navbar-brand ms-2" href="{{ url('/') }}">
             <img src="{{ asset('img/logo.png') }}" alt="" style="width: 150px;">
@@ -32,6 +34,13 @@
                 <div class="titulo">
                     <h1>Uma forma simplificada de anunciar e contratar sua quadra esportiva</h1>
                 </div>
+                @auth
+                    <p class="text-dark">Bem-vindo, {{ auth()->user()->name }}!</p>
+                @endauth
+
+                @guest
+                    <p class="text-dark">Você não está logado.</p>
+                @endguest
                 <div class="botao-comece mb-5 mt-4">
                     <a href="{{ url('/register') }}" class="btn btn-primary btn-lg btn-block" style="width: 400px !important;">Clique aqui para começar</a>
                 </div>
