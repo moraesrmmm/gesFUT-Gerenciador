@@ -28,6 +28,7 @@
             <a href="{{ url('/login') }}" type="submit" class="btn btn-primary ms-2">Login</a>
         </div>
     </nav>
+    
     <div class="container">
         <div class="row mt-5">
             <div class="text-center col-lg-6 col-md-12">
@@ -35,7 +36,7 @@
                     <h1>Uma forma simplificada de anunciar e contratar sua quadra esportiva</h1>
                 </div>
                 @auth
-                    <p class="text-dark">Bem-vindo, {{ auth()->user()->name }}!</p>
+                    <p class="text-dark">Bem-vindo, {{ auth()->user()->user_nome }}!</p>
                 @endauth
 
                 @guest
