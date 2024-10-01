@@ -1,7 +1,31 @@
-var app = angular.module('gesfut', []);
+document.addEventListener('DOMContentLoaded', function() {
+    const inputTag = document.getElementById('cpfInput');
+    const tagContainer = document.getElementById('tagContainer');
+    var erroCpf = false;
 
-app.controller('welcomeCtrl', function($scope) {
+    inputTag.addEventListener('keydown', function(event) {
+        console.log('caiu aqui');
+        if (event.key == 'Enter') {
+            const cpfValue = inputTag.value.trim();
+            if (cpfValue) {
+                fetch(`/buscar-cpf/${cpfValue}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const tagElement = document.createElement('span');
+                            tagElement.className = 'tag';
+                            tagElement.textContent = data.nome;
+                            tagContainer.appendChild(tagElement);
+                        } else {
+                            alert('CPF não encontrado.');
+                        }
+                    })
+                    .catch(error => {
+                        erroCpf = true;
+                    });
 
-    console.log('funfa');
-    $scope.teste = 'teste';
+                inputTag.value = ''; 
+            }
+        }
+    });
 });

@@ -107,7 +107,7 @@
                     <hr>
                     <div class="dropdown pb-4">
                         <a href="" class="d-flex align-items-center text-white text-decoration-none">
-                            Rômulo Moraes<i class="material-icons md-36 ms-2 mt-1" style="font-size: 15px;">manage_accounts</i>
+                        {{ auth()->user()->user_nome }}<i class="material-icons md-36 ms-2 mt-1" style="font-size: 15px;">manage_accounts</i>
                         </a>
                     </div>
                 </div>

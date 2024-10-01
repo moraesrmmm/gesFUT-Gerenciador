@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuadrasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservasController;
 require __DIR__.'/auth.php';
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/quadras/nova', function () {
         return view('nova_quadra');
     });
+
+    Route::get('/buscar-cpf/{cpf}', [QuadrasController::class, 'buscarPorCpf']);
 });
 
 

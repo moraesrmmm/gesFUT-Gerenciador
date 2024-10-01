@@ -4,6 +4,18 @@
 
 @section('content')
 
+<style>
+   .tag {
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 5px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 3px;
+      cursor: pointer;
+   }
+</style>
+
 <div class="row">
    <h1><i class="material-icons text-danger bg-primary rounded me-2" style="font-size: 36px; color: white !important">add</i>Nova Quadra</h1>
 </div>
@@ -53,8 +65,11 @@
 <div class="form-group row mt-2">
     <div class="col-12">
         <label class="mb-2">Quem pode editar esta quadra?:<span style="font-size: 9px; color: orange;"> *opcional</span></label>
-        <input type="text" class="form-control" placeholder="Quem pode editar"> </input>
+        <input type="text" class="form-control" id="cpfInput" placeholder="Quem pode editar"> </input>
     </div>
+</div>
+<div class="form-group row">
+   <div id="tagContainer"></div>
 </div>
 <hr style="background-color: #FF6900 !important;">
 <div class="row justify-content-end">
