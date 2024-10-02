@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         if (data.success) {
                             const tagElement = document.createElement('span');
-                            tagElement.className = 'tag';
+                            tagElement.className   = 'tag';
                             tagElement.textContent = data.nome;
                             tagContainer.appendChild(tagElement);
                         } else {

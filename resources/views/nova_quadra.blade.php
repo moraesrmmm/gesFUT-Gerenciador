@@ -26,6 +26,7 @@
       <input type="text" class="form-control" placeholder="Nome da quadra">
    </div>
 </div>
+<!-- Preencher usando api VIACEP -->
 <div class="form-group row mt-2">
     <div class="col-5">
         <label class="mb-2">Endereço:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
@@ -59,7 +60,7 @@
    </div>
    <div class="col-3">
       <label class="mb-2">Valor da hora:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-      <input type="date" class="form-control" placeholder="Valor da hora"> </input>
+      <input type="text" class="form-control" placeholder="Valor da hora"> </input>
    </div>
 </div>
 <div class="form-group row mt-2">
