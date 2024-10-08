@@ -26,7 +26,7 @@
       <input type="text" class="form-control" placeholder="Nome da quadra">
    </div>
 </div>
-<!-- Preencher usando api VIACEP -->
+
 <div class="form-group row mt-2">
     <div class="col-5">
         <label class="mb-2">Endereço:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>

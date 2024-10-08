@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const inputTag = document.getElementById('cpfInput');
+    const inputTag     = document.getElementById('cpfInput');
     const tagContainer = document.getElementById('tagContainer');
-    var erroCpf = false;
+    var erroCpf        = false;
+    var cCpfs           = [];
 
     inputTag.addEventListener('keydown', function(event) {
         console.log('caiu aqui');
@@ -16,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             tagElement.className   = 'tag';
                             tagElement.textContent = data.nome;
                             tagContainer.appendChild(tagElement);
+
+                            cCpfs.push(cpfValue);
+                            console.log(cCpfs); 
                         } else {
                             alert('CPF não encontrado.');
                         }
