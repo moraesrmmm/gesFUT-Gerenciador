@@ -36,19 +36,16 @@ Route::middleware('auth')->group(function () {
         return view('nova_reserva');
     });
 
-    Route::get('/quadras', function () {
-        return view('quadras');
-    });
-
     Route::get('/quadras/nova', function () {
         return view('nova_quadra');
     });
 
+    Route::get('/quadras', [QuadrasController::class, 'buscaAll'])->name('quadras.index');
+
+    Route::post('/quadras/nova', [QuadrasController::class, 'cadastrarQuadra'])->name('quadras.store');
+
     Route::get('/buscar-cpf/{cpf}', [QuadrasController::class, 'buscarPorCpf']);
 });
-
-
-
 
 
 Route::get('/welcome', function () {
