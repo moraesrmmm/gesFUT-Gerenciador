@@ -20,6 +20,7 @@ class Quadra extends Model
         'qrd_hora_abertura',
         'qrd_hora_fechamento',
         'qrd_hora_valor',
+        'qrd_final_semana',
         'qrd_users_edicao',
         'qrd_imagem',
         'qrd_dt_criacao',

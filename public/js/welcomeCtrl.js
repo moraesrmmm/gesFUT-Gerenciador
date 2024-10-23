@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const inputTag     = document.getElementById('cpfInput');
-    const tagContainer = document.getElementById('tagContainer');
-    var erroCpf        = false;
-    var cCpfs           = [];
+    const inputTag          = document.getElementById('cpfInput');
+    const tagContainer      = document.getElementById('tagContainer');
+    const cQrd_users_edicao = document.getElementById('qrd_users_edicao');
+    var erroCpf             = false;
+    var aCpfs               = [];
 
     inputTag.addEventListener('keydown', function(event) {
         console.log('caiu aqui');
@@ -18,8 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             tagElement.textContent = data.nome;
                             tagContainer.appendChild(tagElement);
 
-                            cCpfs.push(cpfValue);
-                            console.log(cCpfs); 
+                            aCpfs.push(cpfValue);
+                            cQrd_users_edicao.value = aCpfs.join(';');
+                            console.log(aCpfs); 
                         } else {
                             alert('CPF não encontrado.');
                         }
@@ -32,4 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+
+
+
 });

@@ -48,27 +48,38 @@
       </div>
    </div>
    <div class="form-group row mt-2">
-      <div class="col-3">
+      <div class="col-2">
          <label class="mb-2">Tamanho(m2):<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
          <input type="text" class="form-control" placeholder="Tamanho em m2" name="qrd_tamanho">
       </div>
       <div class="col-3">
          <label class="mb-2">Horário de abertura:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <input type="date" class="form-control" name="qrd_hora_abertura">
+         <input type="text" class="form-control" name="qrd_hora_abertura" oninput="formatarHora(this)">
       </div>
       <div class="col-3">
          <label class="mb-2">Horário de fechamento:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <input type="date" class="form-control" name="qrd_hora_fechamento"> 
+         <input type="text" class="form-control" name="qrd_hora_fechamento" oninput="formatarHora(this)"> 
       </div>
-      <div class="col-3">
+      <div class="col-2">
          <label class="mb-2">Valor da hora:<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
          <input type="text" class="form-control" placeholder="Valor da hora" name="qrd_hora_valor"> 
+      </div>
+      <div class="col-2">
+         <label class="form-check-label" for="flexSwitchCheckDefault">Quadra abre finais de semana?</label>
+         <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="qrd_final_semana">
+         </div>
       </div>
    </div>
    <div class="form-group row mt-2">
       <div class="col-12">
          <label class="mb-2">Quem pode editar esta quadra?:<span style="font-size: 9px; color: orange;"> *opcional</span></label>
-         <input type="text" class="form-control" id="cpfInput" placeholder="Quem pode editar" name="qrd_users_edicao"> 
+         <input type="text" class="form-control" id="cpfInput" placeholder="Quem pode editar"> 
+      </div>
+   </div>
+   <div class="form-group rowm-mt-2 d-none">
+      <div class="col-12">
+            <input type="text" id="qrd_users_edicao" name="qrd_users_edicao">
       </div>
    </div>
    <div class="form-group row">
@@ -89,6 +100,16 @@
    </div>
 </form>
 
+<script>
+   function formatarHora(input) {
+      let valor = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+      if (valor.length >= 3) {
+            input.value = valor.slice(0, 2) + ':' + valor.slice(2, 4);
+      } else {
+            input.value = valor;
+      }
+   }
+</script>
 
 @endsection
 

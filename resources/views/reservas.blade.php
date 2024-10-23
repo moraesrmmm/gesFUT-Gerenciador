@@ -6,8 +6,6 @@
 @section('content')
 
 <div class="row">
-<!-- <h1>{{ $mensagem }}</h1>  -->
-
     <div class="card ms-4 mt-4" style="width: 17rem;">
         <img src="../img/sintetico-1.jpg" class="card-img-top mt-2" alt="...">
         <div class="card-body">

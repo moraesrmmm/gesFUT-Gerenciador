@@ -32,9 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/reservas', [ReservasController::class, 'index'])->name('reservas.index');
     
-    Route::get('/reservas/nova', function () {
-        return view('nova_reserva');
-    });
+    Route::get('/reservas/nova', [ReservasController::class, 'buscaQuadras'])->name('reservas.create');
+
+    Route::post('/reservas/nova', [ReservasController::class, 'store'])->name('reservas.store');
 
     Route::get('/quadras/nova', function () {
         return view('nova_quadra');

@@ -22,9 +22,10 @@ return new class extends Migration
             $table->string('qrd_cidade');
             $table->string('qrd_uf', 2);
             $table->string('qrd_tamanho', 10);
-            $table->date('qrd_hora_abertura');
-            $table->date('qrd_hora_fechamento');
+            $table->string('qrd_hora_abertura');
+            $table->string('qrd_hora_fechamento');
             $table->string('qrd_hora_valor');
+            $table->string('qrd_final_semana');
             $table->string('qrd_users_edicao')->nullable();
             $table->string('qrd_imagem')->nullable();
             $table->timestamp('qrd_dt_criacao')->nullable();
