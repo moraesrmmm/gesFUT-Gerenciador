@@ -36,6 +36,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/reservas/nova', [ReservasController::class, 'store'])->name('reservas.store');
 
+    Route::get('//denuncia/nova', function () {
+        return view('nova_denuncia');
+    });
+
+    Route::get('/get-horarios-quadra', [ReservasController::class, 'getHorariosQuadra']);
+
     Route::get('/quadras/nova', function () {
         return view('nova_quadra');
     });

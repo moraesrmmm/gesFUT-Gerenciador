@@ -10,8 +10,8 @@ class ReservasController extends Controller
 
     public function index()
     {
-        $reservas = ''; // Ou outra lógica para pegar as reservas
-        return view('reservas', compact('reservas')); // A view que você deseja para listar as reservas
+        $reservas = ''; 
+        return view('reservas', compact('reservas'));
     }
     
     public function buscaQuadras()
@@ -21,20 +21,36 @@ class ReservasController extends Controller
         return view('nova_reserva', ['quadras' => $quadras]);
     }
     
-    public function gerarHoras($abertura, $fechamento)
-    {
-        $horas = [];
+    public function getHorariosQuadra(Request $request) {
+        $quadraId = $request->input('quadra_id');
     
-        // Converter as horas para objetos DateTime
-        $horaAbertura = \DateTime::createFromFormat('H:i', $abertura);
-        $horaFechamento = \DateTime::createFromFormat('H:i', $fechamento);
+        $quadra = Quadra::find($quadraId);
     
-        // Adicionar as horas ao array
-        while ($horaAbertura <= $horaFechamento) {
-            $horas[] = $horaAbertura->format('H:i');
-            $horaAbertura->modify('+1 hour'); // Incrementa 1 hora
+        if ($quadra) {
+            $horaAbertura   = $quadra->qrd_hora_abertura; 
+            $horaFechamento = $quadra->qrd_hora_fechamento;
+            
+            $intervalosDeHoras = $this->gerarIntervalosDeHoras($horaAbertura, $horaFechamento);
+    
+            return response()->json($intervalosDeHoras);
         }
-
-        return $horas;
+    
+        return response()->json([], 404); 
     }
+    
+    private function gerarIntervalosDeHoras($horaAbertura, $horaFechamento) {
+        $intervalos = [];
+        $horaAtual = strtotime($horaAbertura);
+        $horaLimite = strtotime($horaFechamento);
+    
+        while ($horaAtual < $horaLimite) {
+            $proximaHora = strtotime('+1 hour', $horaAtual);
+            $intervalo = date('H:i', $horaAtual) . ' - ' . date('H:i', $proximaHora);
+            $intervalos[] = $intervalo;
+            $horaAtual = $proximaHora;
+        }
+    
+        return $intervalos;
+    }
+
 }

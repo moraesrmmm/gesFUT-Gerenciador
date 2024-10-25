@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cQrd_users_edicao = document.getElementById('qrd_users_edicao');
     var erroCpf             = false;
     var aCpfs               = [];
+    const btnHoras = document.getElementById('btn_horas');
 
     inputTag.addEventListener('keydown', function(event) {
         console.log('caiu aqui');
@@ -33,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputTag.value = ''; 
             }
         }
+    });
+
+    btnHoras.addEventListener('click', function(event){
+        console.log('oi');
     });
 
 
