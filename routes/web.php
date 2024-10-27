@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuadrasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\PaymentController;
+
 require __DIR__.'/auth.php';
 
 /*
@@ -27,6 +29,8 @@ Route::get('/welcome', function () {
 })->middleware('guest')->name('welcome');
 
 Route::middleware('auth')->group(function () {
+    
+    Route::get('/pagamento/retorno', [ReservasController::class, 'pagamentoRetorno'])->name('pagamento.retorno');
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     

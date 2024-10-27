@@ -18,7 +18,7 @@ class QuadrasController extends Controller
 
     public function buscaAllUsuariosAtivos()
     {
-        $usuarios = User::where('user_ativo', 'ATIVO')->get(); 
+        $usuarios = User::where('user_status', 'ATIVO')->get(); 
         return view('nova_quadra', compact('usuarios'));
     }
 

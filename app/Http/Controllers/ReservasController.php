@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Quadra;
 use App\Models\Reserva;
+use Exception;
 use Illuminate\Http\Request;
+use MercadoPago\SDK;
 
 class ReservasController extends Controller
 {
@@ -14,40 +16,100 @@ class ReservasController extends Controller
         $reservas = ''; 
         return view('reservas', compact('reservas'));
     }
+
+    public function store(Request $request)
+    {
+        SDK::setAccessToken(env('MERCADO_PAGO_ACCESS_TOKEN'));
+
+        $preference = new \MercadoPago\Preference();
+        
+        $item = new \MercadoPago\Item();
+        $item->title = 'Reserva de Quadra';
+        $item->quantity = 1;
+        $item->unit_price = floatval(str_replace(',', '.', $request->rsv_valor_total));
+        
+        $preference->items = array($item);
+        
+        $payer = new \MercadoPago\Payer();
+        $payer->email = "romulo_moraes2018@hotmail.com"; // Email de uma conta diferente
+        
+        $preference->payer = $payer;
+        
+        $preference->back_urls = [
+            "success" => route('pagamento.retorno', ['rsv_quadra_id' => $request->rsv_quadra_id, 'rsv_valor_total' => $request->rsv_valor_total, 'rsv_data' => $request->rsv_data]),
+            "failure" => route('pagamento.retorno'),
+            "pending" => route('pagamento.retorno'),
+        ];
+        $preference->auto_return = "approved"; // Retorno automático
+        
+        $preference->save();
+        
+        return redirect($preference->init_point);
+    
+    }
+
+    public function pagamentoRetorno(Request $request)
+    {
+
+        \MercadoPago\SDK::setAccessToken(env('MERCADO_PAGO_ACCESS_TOKEN'));
+        $paymentId = $request->input('payment_id');
+        $payment = \MercadoPago\Payment::find_by_id($paymentId);
+
+        if ($payment->status == 'approved') {
+
+            Reserva::create([
+                'rsv_user_id' => auth()->id(), // ID do usuário autenticado
+                'rsv_quadra_id' => $request->input('rsv_quadra_id'),
+                'rsv_valor_total' => $request->input('rsv_valor_total'),
+                'rsv_data' => $request->input('rsv_data'),
+                'rsv_data_cancelamento' => null,
+                'rsv_data_edicao' => null,
+                'rsv_status' => 'CONFIRMADO', // Ou o status que você quiser
+            ]);
+
+            return redirect()->route('reservas.index')->with('success', 'Reserva criada com sucesso!');
+        } else {
+            return redirect()->route('reservas.index')->with('error', 'Pagamento não foi aprovado. Tente novamente.');
+        }
+    }
     
     public function buscaQuadras()
     {
-        $quadras = Quadra::where('qrd_status', 'ATIVO')->get(); 
+        $quadras = Quadra::all(); 
     
         return view('nova_reserva', ['quadras' => $quadras]);
     }
     
     public function getHorariosQuadra(Request $request) {
         $quadraId = $request->input('quadra_id');
-        $data = $request->input('data'); // Recebe a data da requisição
     
         $quadra = Quadra::find($quadraId);
     
         if ($quadra) {
             $horaAbertura   = $quadra->qrd_hora_abertura; 
             $horaFechamento = $quadra->qrd_hora_fechamento;
-    
-            // Gere todos os intervalos de horas
+            
             $intervalosDeHoras = $this->gerarIntervalosDeHoras($horaAbertura, $horaFechamento);
     
-            // Busque as reservas existentes para a quadra e a data especificada
-            $reservas = Reserva::where('quadra_id', $quadraId)
-                ->whereDate('data_reserva', $data) // Filtra pelas reservas no dia
-                ->pluck('hora_reserva') // Obtém as horas já reservadas
-                ->toArray();
-    
-            // Filtra os horários disponíveis, removendo os horários reservados
-            $horariosDisponiveis = array_diff($intervalosDeHoras, $reservas);
-    
-            return response()->json($horariosDisponiveis);
+            return response()->json($intervalosDeHoras);
         }
     
         return response()->json([], 404); 
+    }
+    
+    private function gerarIntervalosDeHoras($horaAbertura, $horaFechamento) {
+        $intervalos = [];
+        $horaAtual = strtotime($horaAbertura);
+        $horaLimite = strtotime($horaFechamento);
+    
+        while ($horaAtual < $horaLimite) {
+            $proximaHora = strtotime('+1 hour', $horaAtual);
+            $intervalo = date('H:i', $horaAtual) . ' - ' . date('H:i', $proximaHora);
+            $intervalos[] = $intervalo;
+            $horaAtual = $proximaHora;
+        }
+    
+        return $intervalos;
     }
 
 }

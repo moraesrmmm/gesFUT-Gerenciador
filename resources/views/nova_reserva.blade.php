@@ -21,7 +21,7 @@
     }
 
     .selected {
-        background-color: #FF6900; /* Cor para indicar que está selecionado */
+        background-color: #FF6900;
     }
 
 </style>
@@ -31,11 +31,12 @@
 </div>
 <hr style="background-color: #FF6900 !important;">
 
-<form action="{{ route('reservas.store') }}">
+<form action="{{ route('reservas.store') }}" method="POST">
+    @csrf
    <div class="form-group row">
       <div class="col-12">
          <label class="mb-2">Selecione a quadra desejada <span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <select name="quadra_id" id="quadraSelect" class="form-control">
+         <select name="rsv_quadra_id" id="quadraSelect" class="form-control">
             <option value="">Selecione um quadra</option>
             @foreach($quadras as $quadra)
                 <option value="{{ $quadra->id }}">{{ $quadra->qrd_nome }} - Valor Hora: {{$quadra->qrd_hora_valor}}</option>
@@ -47,11 +48,11 @@
    <div class="form-group row mt-2">
       <div class="col-4">
          <label class="mb-2">Selecione a data <span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <input type="date" class="form-control" required>
+         <input type="date" name="rsv_data" class="form-control" required>
       </div>
       <div class="col-4">
          <label class="mb-2">Valor da Reserva<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <input id="rsv_valor_total" type="text" class="form-control" disabled required>
+         <input id="rsv_valor_total" name="rsv_valor_total" type="text" class="form-control" required>
       </div>
    </div>
    <div class="form-grop row mt-2">
@@ -59,32 +60,32 @@
             <div id="containerDiv"></div>
         </div>
    </div>
-   
+   <hr style="background-color: #FF6900 !important;">
+    <div class="row justify-content-end">
+        <div class="col-6 text-center">
+            <button type="submit" class="btn btn-primary w-100">Ir para pagamento</button>
+        </div>
+    </div>
 </form>
-<hr style="background-color: #FF6900 !important;">
-<div class="row justify-content-end">
-   <div class="col-6 text-center">
-      <button class="btn btn-primary w-100">Ir para pagamento</button>
-   </div>
-</div>
+
 
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
 $(document).ready(function() {
-    let totalValue = 0; // Variável para armazenar o valor total
-    let quadraHoraValor = 0; // Variável para armazenar o valor da hora da quadra
-    let selectedTexts = []; // Array para armazenar os horários selecionados
+    let totalValue = 0; 
+    let quadraHoraValor = 0; 
+    let selectedTexts = []; 
 
     $('#quadraSelect').change(function() {
         var quadraId = $(this).val();
         console.log(quadraId);
        
         if (quadraId) {
-            // Resetando valores ao selecionar uma nova quadra
+        
             totalValue = 0;
-            selectedTexts = []; // Reinicia o array de horários selecionados
+            selectedTexts = [];
             let valorTotalInput = document.getElementById("rsv_valor_total");
             valorTotalInput.value = '0,00'; // Zera o campo de valor total
 
