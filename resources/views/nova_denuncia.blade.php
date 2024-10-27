@@ -16,8 +16,8 @@
             <input class="form-control" type="text">
         </div>
         <div class="col-4">
-         <label class="mb-2">Selecione a data <span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-         <input type="date" class="form-control" required>
+            <label class="mb-2">Selecione a data <span style="font-size: 9px; color: red;"> *obrigatório</span></label>
+            <input type="date" class="form-control" required>
       </div>
    </div>
    <div class="form-grop row mt-2">

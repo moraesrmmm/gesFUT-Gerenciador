@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="gesfut">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +42,7 @@
         }
     </style>
 </head>
-<body>
+<body >
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
@@ -64,7 +64,6 @@
                                 <li class="list-sub-menu"><a href="{{ url('/reservas/nova') }}" class="nav-link px-0 text-white">Nova Reserva</a></li>
                             </ul>
                         </li>
-                        
                         <li class="nav-item">
                             <a class="nav-link align-middle px-0 text-white" id="pagamentosToggle">
                                 <span class="d-flex align-items-center">
@@ -87,26 +86,31 @@
                                 <li class="list-sub-menu"><a href="{{ url('/denuncia/nova') }}" class="nav-link px-0 text-white">Nova Denúncias</a></li>
                             </ul>
                         </li>
-                        <hr class="custom-hr mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link align-middle px-0 text-white" id="gerenciaToggle">
-                                <span class="d-flex align-items-center">
-                                    <i class="material-icons md-36" style="font-size: 20px; margin-right: 8px; color: #FF6900 !important">settings</i>
-                                    <span class=" d-none d-sm-inline">Gerência</span>
-                                </span>
-                            </a>
-                            <ul class="submenu">
-                                <!-- <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Usuários</a></li> -->
-                                <li class="list-sub-menu"><a href="{{ url('/quadras') }}" class="nav-link px-0 text-white">Quadras</a></li>
-                                <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reservas</a></li>
-                                <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reclamações</a></li>
-                                <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Administradores</a></li>
-                            </ul>
-                        </li>
+                        @if ( auth()->user()->user_nivel  == 1 || auth()->user()->user_nivel == 99)
+                            <hr class="custom-hr mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link align-middle px-0 text-white" id="gerenciaToggle">
+                                    <span class="d-flex align-items-center">
+                                        <i class="material-icons md-36" style="font-size: 20px; margin-right: 8px; color: #FF6900 !important">settings</i>
+                                        <span class=" d-none d-sm-inline">Gerência</span>
+                                    </span>
+                                </a>
+                                <ul class="submenu">
+                                    <li class="list-sub-menu"><a href="{{ url('/quadras') }}" class="nav-link px-0 text-white">Quadras</a></li>
+                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reservas</a></li>
+                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reclamações</a></li>
+                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Administradores</a></li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
-                        <a href="" class="d-flex align-items-center text-white text-decoration-none">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                            <button type="submit" class="btn btn-link text-danger">Logout</button>
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-flex align-items-center text-white text-decoration-none">
                         {{ auth()->user()->user_nome }}<i class="material-icons md-36 ms-2 mt-1" style="font-size: 15px;">manage_accounts</i>
                         </a>
                     </div>
@@ -120,14 +124,11 @@
     <script>
         document.querySelectorAll('.nav-link[id$="Toggle"]').forEach(function (element) {
             element.addEventListener('click', function () {
-                // Fechar todos os outros menus
                 document.querySelectorAll('.nav-item').forEach(function (item) {
                     if (item !== this.parentElement) {
                         item.classList.remove('expanded');
                     }
                 }, this);
-
-                // Alternar o menu atual
                 this.parentElement.classList.toggle('expanded');
             });
         });

@@ -71,25 +71,20 @@
          </div>
       </div>
    </div>
-   <div class="form-group row mt-2">
-      <div class="col-12">
-         <label class="mb-2">Quem pode editar esta quadra?:<span style="font-size: 9px; color: orange;"> *opcional</span></label>
-         <input type="text" class="form-control" id="cpfInput" placeholder="Quem pode editar"> 
-      </div>
-   </div>
-   <div class="form-group rowm-mt-2 d-none">
-      <div class="col-12">
-            <input type="text" id="qrd_users_edicao" name="qrd_users_edicao">
-      </div>
-   </div>
-   <div class="form-group row">
-      <div id="tagContainer"></div>
+   <div class="col-12 mt-1">
+      <label class=" form-label">Quem pode editar?</label><strong style="font-size: 9px; color: red;"> *obrigatório</strong>
+      <select class="form-control" name="qrd_users_edicao[]" multiple required>
+         <option value="">Selecione uma opção</option>
+         @foreach ($usuarios as $usuario)
+            <option value="{{ $usuario->id }}">{{ $usuario->user_nome }}</option>
+         @endforeach
+      </select>
    </div>
    <div class="form-group row mt-2">
-   <div class="col-12">
-        <label class="form-label">Imagem da quadra</label>
-        <input type="file" class="form-control" name="qrd_imagem" accept="image/*" required>
-    </div>
+      <div class="col-12">
+         <label class="form-label">Imagem da quadra</label>
+         <input type="file" class="form-control" name="qrd_imagem" accept="image/*" required>
+      </div>
    </div>
 
    <hr style="background-color: #FF6900 !important;">

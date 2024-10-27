@@ -74,11 +74,11 @@
     $('#quadraSelect').change(function() {
         var quadraId = $(this).val();
         console.log(quadraId);
-        let totalValue = 0; // Valor total inicial
-        let quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}"); // Valor por hora da quadra
+        let totalValue = 0; 
+        let quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}"); 
         console.log(quadraHoraValor);
         let valorTotalInput = document.getElementById("rsv_valor_total");
-        valorTotalInput.value = '0,00'; // Inicializa c
+        valorTotalInput.value = '0,00'; 
 
         if (quadraId) {
             $.ajax({
@@ -103,12 +103,10 @@
                                 const index = selectedTexts.indexOf(texto);
 
                                 if (index === -1) {
-                                    // Se não estiver, adiciona ao array e soma ao total
                                     selectedTexts.push(texto);
                                     $(this).addClass('selected');
                                     totalValue += quadraHoraValor;
                                 } else {
-                                    // Se já estiver, remove do array e subtrai do total
                                     selectedTexts.splice(index, 1);
                                     $(this).removeClass('selected');
                                     totalValue -= quadraHoraValor;
@@ -116,7 +114,7 @@
 
                                 const selectedString = selectedTexts.join(';');
                                 console.log('String atual:', selectedString);
-                                valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); // Atualiza o input com o total formatado
+                                valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); 
                             });
 
                             container.append(btnHoras);

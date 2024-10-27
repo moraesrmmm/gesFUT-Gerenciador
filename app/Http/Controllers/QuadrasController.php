@@ -8,29 +8,21 @@ use Illuminate\Http\Request;
 
 class QuadrasController extends Controller
 {
-    
-    public function buscarPorCpf($cpf){
-        // Busca o usuário pelo CPF
-        $usuario = User::where('user_cpf', $cpf)->first();
-
-        if ($usuario) {
-            return response()->json([
-                'success' => true,
-                'nome' => $usuario->user_nome, 
-            ]);
-        }
-
-        return response()->json(['success' => false]);
-    }
 
     public function buscaAll()
     {
-        $quadras = Quadra::all(); 
+        $userId = auth()->id();
+        $quadras = Quadra::where('qrd_user_id', $userId)->get(); 
         return view('quadras', compact('quadras'));
     }
 
+    public function buscaAllUsuariosAtivos()
+    {
+        $usuarios = User::where('user_ativo', 'ATIVO')->get(); 
+        return view('nova_quadra', compact('usuarios'));
+    }
+
     public function cadastrarQuadra(Request $request){
-        // dd($request->all());
 
         try{
             $request->validate([
@@ -44,13 +36,16 @@ class QuadrasController extends Controller
                 'qrd_hora_fechamento' => ['required', 'string'],
                 'qrd_hora_valor' => ['required', 'string'],
                 'qrd_final_semana' => ['required', 'string'],
-                'qrd_users_edicao' => ['string'],
+                'qrd_users_edicao' => ['array'],
                 'qrd_imagem' => ['required'],
             ]);
 
+            $usuariosEdicao = $request->input('qrd_users_edicao', []);
+            $usuariosEdicaoString = implode(';', $usuariosEdicao);
+
             $imagePath = '';
-            if ($request->hasFile('qrd_imagem')) { // Corrigido o nome para o correto
-                $imagePath = $request->file('qrd_imagem')->store('imagens_quadras', 'public'); // Salva a imagem na pasta public/images
+            if ($request->hasFile('qrd_imagem')) { 
+                $imagePath = $request->file('qrd_imagem')->store('imagens_quadras', 'public'); 
             }
     
             Quadra::create([
@@ -65,7 +60,7 @@ class QuadrasController extends Controller
                 'qrd_hora_fechamento' => $request->qrd_hora_fechamento,
                 'qrd_hora_valor' => $request->qrd_hora_valor,
                 'qrd_final_semana' => $request->qrd_final_semana,
-                'qrd_users_edicao' => $request->qrd_users_edicao,
+                'qrd_users_edicao' => $usuariosEdicaoString,
                 'qrd_imagem' => $imagePath,
                 'qrd_dt_criacao' => now(),
                 'qrd_dt_atualizacao' => now(),

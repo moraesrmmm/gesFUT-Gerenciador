@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuadrasController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -36,15 +39,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/reservas/nova', [ReservasController::class, 'store'])->name('reservas.store');
 
-    Route::get('//denuncia/nova', function () {
+    Route::get('/denuncia/nova', function () {
         return view('nova_denuncia');
     });
 
     Route::get('/get-horarios-quadra', [ReservasController::class, 'getHorariosQuadra']);
 
-    Route::get('/quadras/nova', function () {
-        return view('nova_quadra');
-    });
+    Route::get('/quadras/nova', function () { return view('nova_quadra'); });
+
+    Route::get('/quadras/nova', [QuadrasController::class, 'buscaAllUsuariosAtivos'])->name('quadras.busca.usuarios');
 
     Route::get('/quadras', [QuadrasController::class, 'buscaAll'])->name('quadras.index');
 
@@ -58,11 +61,3 @@ Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::middleware('auth')->group(function () {
-   
-    
-});
-
-
-
-require __DIR__.'/auth.php';
