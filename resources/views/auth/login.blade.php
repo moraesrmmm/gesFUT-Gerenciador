@@ -55,7 +55,7 @@
         <div class="form-group row mt-3">
             <div class="col-12">
                 <label for="password" class="mb-2">Senha<span style="font-size: 9px; color: red;"> *obrigatório</span></label>
-                <input id="password" type="text" class="form-control" name="password" placeholder="Digite a sua senha" value="{{ old('senha') }}" required>
+                <input id="password" type="password" class="form-control" name="password" placeholder="Digite a sua senha" value="{{ old('senha') }}" required>
             </div>
         </div>
         <div class="form-group row mt-3">

@@ -36,6 +36,7 @@
       <div class="col-12">
          <label class="mb-2">Selecione a quadra desejada <span style="font-size: 9px; color: red;"> *obrigatório</span></label>
          <select name="quadra_id" id="quadraSelect" class="form-control">
+            <option value="">Selecione um quadra</option>
             @foreach($quadras as $quadra)
                 <option value="{{ $quadra->id }}">{{ $quadra->qrd_nome }} - Valor Hora: {{$quadra->qrd_hora_valor}}</option>
             @endforeach
@@ -70,17 +71,23 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
+
+$(document).ready(function() {
+    let totalValue = 0; // Variável para armazenar o valor total
+    let quadraHoraValor = 0; // Variável para armazenar o valor da hora da quadra
+    let selectedTexts = []; // Array para armazenar os horários selecionados
+
     $('#quadraSelect').change(function() {
         var quadraId = $(this).val();
         console.log(quadraId);
-        let totalValue = 0; 
-        let quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}"); 
-        console.log(quadraHoraValor);
-        let valorTotalInput = document.getElementById("rsv_valor_total");
-        valorTotalInput.value = '0,00'; 
-
+       
         if (quadraId) {
+            // Resetando valores ao selecionar uma nova quadra
+            totalValue = 0;
+            selectedTexts = []; // Reinicia o array de horários selecionados
+            let valorTotalInput = document.getElementById("rsv_valor_total");
+            valorTotalInput.value = '0,00'; // Zera o campo de valor total
+
             $.ajax({
                 url: '/get-horarios-quadra',
                 type: 'GET',
@@ -90,8 +97,13 @@
                     const container = $('#containerDiv');
                     container.empty(); 
 
-                    let selectedTexts = []; 
-
+                    // Obtendo o valor da hora da quadra selecionada
+                    @foreach ($quadras as $quadra)
+                        if (quadraId == {{ $quadra->id }}) {
+                            quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}");
+                        }
+                    @endforeach
+                    console.log(quadraHoraValor);
                     if (data.length > 0) {
                         data.forEach(function(texto) {
                             const btnHoras = $('<button></button>')
@@ -103,18 +115,20 @@
                                 const index = selectedTexts.indexOf(texto);
 
                                 if (index === -1) {
+                                    // Se não estiver selecionado, adiciona ao array e muda a classe
                                     selectedTexts.push(texto);
-                                    $(this).addClass('selected');
-                                    totalValue += quadraHoraValor;
+                                    $(this).addClass('selected'); // Adiciona uma classe para mostrar que está selecionado
+                                    totalValue += quadraHoraValor; // Soma o valor da hora da quadra
                                 } else {
+                                    // Se já estiver selecionado, remove do array e retira a classe
                                     selectedTexts.splice(index, 1);
                                     $(this).removeClass('selected');
-                                    totalValue -= quadraHoraValor;
+                                    totalValue -= quadraHoraValor; // Subtrai o valor da hora da quadra
                                 }
 
-                                const selectedString = selectedTexts.join(';');
-                                console.log('String atual:', selectedString);
-                                valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); 
+                                // Atualiza o campo de valor total
+                                valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); // Formata para exibir com vírgula
+                                console.log('String atual:', selectedTexts.join(';')); // Exibe os horários selecionados
                             });
 
                             container.append(btnHoras);

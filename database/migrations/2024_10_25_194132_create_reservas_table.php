@@ -15,7 +15,17 @@ return new class extends Migration
     {
         Schema::create('reservas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('rsv_user_id');
+            $table->unsignedBigInteger('rsv_quadra_id');
+            $table->string('rsv_valor_total');
+            $table->timestamp('rsv_data');
+            $table->timestamp('rsv_data_cancelamento')->nullable();
+            $table->timestamp('rsv_data_edicao')->nullable();
+            $table->string('rsv_status');
             $table->timestamps();
+            
+            $table->foreign('rsv_user_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('rsv_quadra_id')->references('id')->on('quadras')->onDelete('cascade');
         });
     }
 

@@ -19,12 +19,12 @@ require __DIR__.'/auth.php';
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('welcome');
 })->middleware('guest');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/welcome', function () {
+    return view('welcome');
+})->middleware('guest')->name('welcome');
 
 Route::middleware('auth')->group(function () {
 
@@ -55,9 +55,4 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/buscar-cpf/{cpf}', [QuadrasController::class, 'buscarPorCpf']);
 });
-
-
-Route::get('/welcome', function () {
-    return view('welcome');
-})->name('welcome');
 
