@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quadra;
 use App\Models\Reserva;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use MercadoPago\SDK;
@@ -11,9 +12,19 @@ use MercadoPago\SDK;
 class ReservasController extends Controller
 {
 
-    public function index()
+    public function buscaAll()
     {
-        $reservas = ''; 
+        $userId = auth()->id();
+        
+        // Carrega as reservas do usuário junto com as informações da quadra associada
+        $reservas = Reserva::where('rsv_user_id', $userId)
+                           ->with('quadra') // Carrega o relacionamento com `Quadra`
+                           ->get(); 
+
+        foreach ($reservas as $reserva) {
+            $reserva->formatted_data = Carbon::parse($reserva->rsv_data)->format('d/m/Y');
+        }
+    
         return view('reservas', compact('reservas'));
     }
 

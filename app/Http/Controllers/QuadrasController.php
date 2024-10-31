@@ -12,7 +12,11 @@ class QuadrasController extends Controller
     public function buscaAll()
     {
         $userId = auth()->id();
-        $quadras = Quadra::where('qrd_user_id', $userId)->get(); 
+        
+        $quadras = Quadra::where('qrd_user_id', $userId)
+                    ->orWhereRaw("FIND_IN_SET(?, qrd_users_edicao)", [$userId])
+                    ->get();
+    
         return view('quadras', compact('quadras'));
     }
 

@@ -19,4 +19,9 @@ class Reserva extends Model
         'rsv_status',
     ];
 
+    public function quadra()
+    {
+        return $this->belongsTo(Quadra::class, 'rsv_quadra_id');
+    }
+
 }
