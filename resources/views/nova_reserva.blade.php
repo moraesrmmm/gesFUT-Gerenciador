@@ -60,7 +60,7 @@
             <div id="containerDiv"></div>
         </div>
    </div>
-   <input id="rsv_horarios" name="rsv_horarios" type="text" class="form-control">
+   <input id="rsv_horarios" name="rsv_horarios" type="text" class="form-control d-none">
    <hr style="background-color: #FF6900 !important;">
     <div class="row justify-content-end">
         <div class="col-6 text-center">
@@ -120,7 +120,7 @@ $(document).ready(function() {
                                 }
 
                                 valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); // Formata para exibir com vírgula
-                                console.log('String atual:', selectedTexts.join(';'));
+                                $('#rsv_horarios').val(selectedTexts.join(';'));
                             });
 
                             container.append(btnHoras);
@@ -140,7 +140,6 @@ $(document).ready(function() {
     });
 
     $('#reservationForm').submit(function() {
-        $('#rsv_horarios').val(selectedTexts.join(';'));
         $('#rsv_horarios').removeClass('d-none');
     });
 });
