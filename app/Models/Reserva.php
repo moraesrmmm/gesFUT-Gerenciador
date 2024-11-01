@@ -16,6 +16,7 @@ class Reserva extends Model
         'rsv_data',
         'rsv_data_cancelamento',
         'rsv_data_edicao',
+        'rsv_horarios',
         'rsv_status',
     ];
 

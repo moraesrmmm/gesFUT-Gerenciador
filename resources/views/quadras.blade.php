@@ -15,10 +15,14 @@
                 <p>Funcionamento: <span class="bg-gray p-1">{{ $quadra->qrd_hora_abertura }}</span> as <span class="bg-gray p-1">{{ $quadra->qrd_hora_fechamento }}</span></p>
                 <div class="row justify-content-center">
                     <div class="col-6">
-                        <button class="btn btn-danger">Excluir</button>
+                        <form action="{{ route('quadras.destroy', $quadra->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PATCH') <!-- Usando PATCH para atualizar o status -->
+                            <button type="submit" class="btn w-100 btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta quadra?')">Excluir</button>
+                        </form>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-primary">Editar</button>
+                        <a href="{{ route('quadras.edit', $quadra->id) }}" class="btn btn-primary">Editar</a>
                     </div>
                 </div>
             </div>

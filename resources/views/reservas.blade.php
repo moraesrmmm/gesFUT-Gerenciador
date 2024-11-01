@@ -13,11 +13,12 @@
             <p class="card-text">Data: {{$reserva->formatted_data}}</p>
             <p>Horário: <span class="bg-gray p-1">20:00</span> as <span class="bg-gray p-1">22:00</span></p>
             <div class="row justify-content-center">
-                <div class="col-6">
-                    <button class="btn btn-danger">Cancelar</button>
-                </div>
-                <div class="col-6">
-                    <button class="btn btn-primary">Reagendar</button>
+                <div class="mt-4">
+                    <form action="{{ route('reservas.destroy', $reserva->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('PATCH') <!-- Usando PATCH para atualizar o status -->
+                        <button type="submit" class="btn w-100 btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta reserva?')">Excluir</button>
+                    </form>
                 </div>
             </div>
         </div>

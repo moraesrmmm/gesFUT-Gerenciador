@@ -15,7 +15,15 @@ return new class extends Migration
     {
         Schema::create('denuncias', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('dnc_user_id');
+            $table->unsignedBigInteger('dnc_rsv_id');
+            $table->string('dnc_descricao');
+            $table->timestamp('dnc_data');
+            $table->string('dnc_status');
             $table->timestamps();
+            
+            $table->foreign('dnc_user_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('dnc_rsv_id')->references('id')->on('reservas')->onDelete('cascade');
         });
     }
 

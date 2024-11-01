@@ -61,10 +61,9 @@
                             </a>
                             <ul class="submenu">
                                 <li class="list-sub-menu"><a href="{{ url('/reservas') }}" class="nav-link px-0 text-white">Minhas Reservas</a></li>
-                                <li class="list-sub-menu"><a href="{{ url('/reservas/nova') }}" class="nav-link px-0 text-white">Nova Reserva</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link align-middle px-0 text-white" id="pagamentosToggle">
                                 <span class="d-flex align-items-center">
                                     <i class="material-icons md-36" style="font-size: 20px; margin-right: 8px; color: #FF6900 !important">attach_money</i>
@@ -74,7 +73,7 @@
                             <ul class="submenu">
                                 <li class="list-sub-menu"><a href="{{ url('/pagamentos') }}" class="nav-link px-0 text-white">Pagamentos</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link align-middle px-0 text-white" id="denunciaToggle">
                                 <span class="d-flex align-items-center">
@@ -86,22 +85,35 @@
                                 <li class="list-sub-menu"><a href="{{ url('/denuncia/nova') }}" class="nav-link px-0 text-white">Nova Denúncias</a></li>
                             </ul>
                         </li>
-                        @if ( auth()->user()->user_nivel  == 1 || auth()->user()->user_nivel == 99)
+                        @if (auth()->user()->user_nivel == 1 || auth()->user()->user_nivel == 99)
                             <hr class="custom-hr mb-2">
                             <li class="nav-item">
                                 <a class="nav-link align-middle px-0 text-white" id="gerenciaToggle">
                                     <span class="d-flex align-items-center">
                                         <i class="material-icons md-36" style="font-size: 20px; margin-right: 8px; color: #FF6900 !important">settings</i>
-                                        <span class=" d-none d-sm-inline">Gerência</span>
+                                        <span class="d-none d-sm-inline">Gerência</span>
                                     </span>
                                 </a>
                                 <ul class="submenu">
                                     <li class="list-sub-menu"><a href="{{ url('/quadras') }}" class="nav-link px-0 text-white">Quadras</a></li>
-                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reservas</a></li>
-                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reclamações</a></li>
-                                    <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Administradores</a></li>
+                                    <!-- <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Reservas</a></li> -->
+                                    <li class="list-sub-menu"><a href="{{ url('/denuncias') }}" class="nav-link px-0 text-white">Reclamações</a></li>
+                                    <!-- <li class="list-sub-menu"><a href="#" class="nav-link px-0 text-white">Administradores</a></li> -->
                                 </ul>
                             </li>
+                        @else
+                            <form id="premiumForm" action="{{ route('premium.store') }}" method="POST">
+                                @csrf
+                                <hr class="custom-hr mb-2">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link align-middle px-0 text-white" onclick="event.preventDefault(); document.getElementById('premiumForm').submit();">
+                                        <span class="d-flex align-items-center">
+                                            <i class="material-icons md-36" style="font-size: 20px; margin-right: 8px; color: #FF6900 !important;">info</i>
+                                            <span class="d-none d-sm-inline">Seja Premium</span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </form>
                         @endif
                     </ul>
                     <hr>

@@ -13,3 +13,5 @@
 
 <!-- Controllers -->
 <script src="{{ asset('js/QuadrasCtrl.js') }}"></script>
+
+

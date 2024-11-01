@@ -31,7 +31,7 @@
 </div>
 <hr style="background-color: #FF6900 !important;">
 
-<form action="{{ route('reservas.store') }}" method="POST">
+<form action="{{ route('reservas.store') }}" method="POST" id="reservationForm">
     @csrf
    <div class="form-group row">
       <div class="col-12">
@@ -60,6 +60,7 @@
             <div id="containerDiv"></div>
         </div>
    </div>
+   <input id="rsv_horarios" name="rsv_horarios" type="text" class="form-control">
    <hr style="background-color: #FF6900 !important;">
     <div class="row justify-content-end">
         <div class="col-6 text-center">
@@ -74,16 +75,15 @@
 <script>
 
 $(document).ready(function() {
-    let totalValue = 0; 
-    let quadraHoraValor = 0; 
-    let selectedTexts = []; 
+    let totalValue = 0;
+    let quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}"); // Supondo que você tenha o valor da quadra carregado aqui
+    let selectedTexts = [];
 
     $('#quadraSelect').change(function() {
         var quadraId = $(this).val();
         console.log(quadraId);
-       
+
         if (quadraId) {
-        
             totalValue = 0;
             selectedTexts = [];
             let valorTotalInput = document.getElementById("rsv_valor_total");
@@ -96,14 +96,8 @@ $(document).ready(function() {
                 success: function(data) {
                     $('#horariosSelect').empty();
                     const container = $('#containerDiv');
-                    container.empty(); 
+                    container.empty();
 
-                    // Obtendo o valor da hora da quadra selecionada
-                    @foreach ($quadras as $quadra)
-                        if (quadraId == {{ $quadra->id }}) {
-                            quadraHoraValor = parseFloat("{{ $quadra->qrd_hora_valor }}");
-                        }
-                    @endforeach
                     console.log(quadraHoraValor);
                     if (data.length > 0) {
                         data.forEach(function(texto) {
@@ -116,20 +110,17 @@ $(document).ready(function() {
                                 const index = selectedTexts.indexOf(texto);
 
                                 if (index === -1) {
-                                    // Se não estiver selecionado, adiciona ao array e muda a classe
                                     selectedTexts.push(texto);
-                                    $(this).addClass('selected'); // Adiciona uma classe para mostrar que está selecionado
-                                    totalValue += quadraHoraValor; // Soma o valor da hora da quadra
+                                    $(this).addClass('selected');
+                                    totalValue += quadraHoraValor;
                                 } else {
-                                    // Se já estiver selecionado, remove do array e retira a classe
                                     selectedTexts.splice(index, 1);
                                     $(this).removeClass('selected');
-                                    totalValue -= quadraHoraValor; // Subtrai o valor da hora da quadra
+                                    totalValue -= quadraHoraValor;
                                 }
 
-                                // Atualiza o campo de valor total
                                 valorTotalInput.value = totalValue.toFixed(2).replace('.', ','); // Formata para exibir com vírgula
-                                console.log('String atual:', selectedTexts.join(';')); // Exibe os horários selecionados
+                                console.log('String atual:', selectedTexts.join(';'));
                             });
 
                             container.append(btnHoras);
@@ -147,7 +138,12 @@ $(document).ready(function() {
             $('#horariosSelect').empty().append(new Option('Selecione um horário', ''));
         }
     });
+
+    $('#reservationForm').submit(function() {
+        $('#rsv_horarios').val(selectedTexts.join(';'));
+        $('#rsv_horarios').removeClass('d-none');
+    });
 });
 
-</script>
 
+</script>

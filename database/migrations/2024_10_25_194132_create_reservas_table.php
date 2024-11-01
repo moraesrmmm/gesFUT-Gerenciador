@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('rsv_data');
             $table->timestamp('rsv_data_cancelamento')->nullable();
             $table->timestamp('rsv_data_edicao')->nullable();
+            $table->string('rsv_horarios');
             $table->string('rsv_status');
             $table->timestamps();
             

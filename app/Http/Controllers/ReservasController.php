@@ -18,8 +18,9 @@ class ReservasController extends Controller
         
         // Carrega as reservas do usuário junto com as informações da quadra associada
         $reservas = Reserva::where('rsv_user_id', $userId)
-                           ->with('quadra') // Carrega o relacionamento com `Quadra`
-                           ->get(); 
+        ->where('rsv_status', '!=', 'EXCLUIDO') // Verifica se o status não é "EXCLUIDO"
+        ->with('quadra') // Carrega o relacionamento com `Quadra`
+        ->get();
 
         foreach ($reservas as $reserva) {
             $reserva->formatted_data = Carbon::parse($reserva->rsv_data)->format('d/m/Y');
@@ -47,7 +48,7 @@ class ReservasController extends Controller
         $preference->payer = $payer;
         
         $preference->back_urls = [
-            "success" => route('pagamento.retorno', ['rsv_quadra_id' => $request->rsv_quadra_id, 'rsv_valor_total' => $request->rsv_valor_total, 'rsv_data' => $request->rsv_data]),
+            "success" => route('pagamento.retorno', ['rsv_quadra_id' => $request->rsv_quadra_id, 'rsv_valor_total' => $request->rsv_valor_total, 'rsv_data' => $request->rsv_data, 'rsv_horarios' => $request->rsv_horarios]),
             "failure" => route('pagamento.retorno'),
             "pending" => route('pagamento.retorno'),
         ];
@@ -75,6 +76,7 @@ class ReservasController extends Controller
                 'rsv_data' => $request->input('rsv_data'),
                 'rsv_data_cancelamento' => null,
                 'rsv_data_edicao' => null,
+                'rsv_horarios' => $request->input('rsv_horarios'),
                 'rsv_status' => 'CONFIRMADO', // Ou o status que você quiser
             ]);
 
@@ -121,6 +123,15 @@ class ReservasController extends Controller
         }
     
         return $intervalos;
+    }
+
+    public function excluirReserva($id)
+    {
+        $reserva = Reserva::findOrFail($id);
+    
+        $reserva->update(['rsv_status' => 'EXCLUIDO']);
+    
+        return redirect()->route('reservas.index')->with('success', 'Reserva excluída com sucesso!');
     }
 
 }
